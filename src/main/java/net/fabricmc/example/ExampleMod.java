@@ -20,6 +20,8 @@ public class ExampleMod implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 
+	public static boolean isFishingEnabled = false;
+
 	public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
 			new Identifier("modid", "general"),
 			() -> new ItemStack(Blocks.COAL_BLOCK));
