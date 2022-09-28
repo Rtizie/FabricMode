@@ -1,10 +1,12 @@
 package net.fabricmc.example;
 
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -20,23 +22,32 @@ public class ExampleMod implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 
-	public static boolean isFishingEnabled = false;
+	public AutoFish autoFish = new AutoFish();
+	public MinecraftClient client;
 
-	public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
-			new Identifier("modid", "general"),
-			() -> new ItemStack(Blocks.COAL_BLOCK));
+	public static boolean isFishingEnabled = false;
+	private static ExampleMod instance;
+
+	//public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
+	//		new Identifier("modid", "general"),
+	//		() -> new ItemStack(Blocks.COAL_BLOCK));
 
 	@Override
 	public void onInitialize() {
+		if(this.instance == null) instance = this;
+		autoFish.client = this.client;
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
-		Registry.register(Registry.ITEM, new Identifier("modid", "wooden_coal"), WOODEN_COAL);
-		FuelRegistry.INSTANCE.add(WOODEN_COAL,400);
+		// Registry.register(Registry.ITEM, new Identifier("modid", "wooden_coal"), WOODEN_COAL);
+		// FuelRegistry.INSTANCE.add(WOODEN_COAL,400);
 
 	}
+	public static ExampleMod getInstance() {
+		return instance;
+	}
+
 	// an instance of our new item
-	public static final WoodenCoal WOODEN_COAL = new WoodenCoal(new FabricItemSettings().group(ExampleMod.ITEM_GROUP).maxCount(16));
+	// public static final WoodenCoal WOODEN_COAL = new WoodenCoal(new FabricItemSettings().group(ExampleMod.ITEM_GROUP).maxCount(16));
 }

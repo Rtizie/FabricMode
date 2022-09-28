@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "ExampleMixin"
+    "ExampleMixin",
+    "FishingBobberEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
